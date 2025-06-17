@@ -21,23 +21,30 @@ RUN yum update && \
     libtool  \
     make  \
     pkgconfig  \
-    glibc-static && \
+    glibc-static \
+    numactl-devel && \
     yum groupinstall 'Development Tools' -y
 
 # Install OpenCV
-RUN git clone https://github.com/opencv/opencv.git --branch 4.5.5 --depth 1 && \
-    mkdir -p opencv/build && \
-    cd opencv/build && \
-    cmake  \
-    -D CMAKE_BUILD_TYPE=RELEASE  \
-    -D OPENCV_GENERATE_PKGCONFIG=YES  \
+RUN git clone https://github.com/opencv/opencv.git --branch 4.5.5 --depth 1
+
+RUN mkdir -p opencv/build
+
+RUN cd opencv/build && \
+    cmake \
+    -D CMAKE_BUILD_TYPE=RELEASE \
+    -D OPENCV_GENERATE_PKGCONFIG=YES \
     -D OPENCV_ENABLE_NONFREE=OFF \
-    LD_LIST=core,imgproc  \
-    .. && \
-    make -j$(nproc) && \
-    make install && \
-    cp ./unix-install/opencv4.pc /usr/local/lib/pkgconfig/ && \
-    rm -rf ~/opencv
+    -D BUILD_LIST=core,imgproc \
+    ..
+
+RUN cd opencv/build && make -j$(nproc)
+
+RUN cd opencv/build && make install
+
+RUN cd opencv/build && cp ./unix-install/opencv4.pc /usr/local/lib/pkgconfig/
+
+RUN rm -rf ~/opencv
 
 WORKDIR /root
 
@@ -73,6 +80,19 @@ RUN cd ~/ffmpeg_sources && \
     make install && \
     rm -rf ~/ffmpeg_sources/x264 \
     rm -rf ~/ffmpeg_sources/x264
+
+RUN cd ~/ffmpeg_sources && \
+    wget https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.1.tar.gz && \
+    tar xzf x265_4.1.tar.gz && \
+    cd x265_4.1/build/linux && \
+    cmake -G "Unix Makefiles" \
+    -DCMAKE_INSTALL_PREFIX=/usr/local \
+    -DENABLE_SHARED=off \
+    ../../source && \
+    make -j$(nproc) && \
+    make install && \
+    rm -rf ~/ffmpeg_sources/x265_4.1.tar.gz \
+    rm -rf ~/ffmpeg_sources/x265_4.1
 
 RUN cd ~/ffmpeg_sources && \
     curl -O -L https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz && \
@@ -178,6 +198,7 @@ RUN cd ~/ffmpeg_sources && \
     --enable-libvorbis \
     --enable-libvpx \
     --enable-libx264 \
+    --enable-libx265 \
     --enable-nonfree \
     --enable-pic || cat ffbuild/config.log && \
     make -j$(nproc) && \
