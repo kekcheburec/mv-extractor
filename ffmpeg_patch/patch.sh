@@ -9,4 +9,5 @@ else
     yes | cp -rf "$FFMPEG_PATCH_DIR"/avcodec.h "$FFMPEG_INSTALL_DIR"/libavcodec/
     yes | cp -rf "$FFMPEG_PATCH_DIR"/rtpdec.c "$FFMPEG_INSTALL_DIR"/libavformat/
     yes | cp -rf "$FFMPEG_PATCH_DIR"/utils.c "$FFMPEG_INSTALL_DIR"/libavformat/
+    yes | cp -rf "$FFMPEG_PATCH_DIR"/mathops.h "$FFMPEG_INSTALL_DIR"/libavcodec/x86/
 fi

@@ -10,3 +10,14 @@ libavformat/rtpdec.c
 libavformat/utils.c
 
 For a detailed description of the changes refer to "patch_description.docx".
+
+This directory contains patches for FFmpeg n4.1.3 that:
+
+1. Fix motion vector extraction in avcodec.h
+2. Fix RTP packet handling in rtpdec.c
+3. Fix timestamp handling in utils.c
+4. Fix assembling with binutils as >= 2.41 in mathops.h (x86 assembly code)
+
+The patches are applied by the patch.sh script which copies these files to their respective locations in the FFmpeg source tree.
+
+Please ensure FFMPEG_INSTALL_DIR and FFMPEG_PATCH_DIR environment variables are set before running the patch script.

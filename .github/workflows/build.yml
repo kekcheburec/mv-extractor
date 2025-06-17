@@ -29,10 +29,9 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64
-          build-args: "ARCH=x86_64"
-          tags: sneakyberry/mv-extractor:dev-amd64
-          cache-from: type=registry,ref=sneakyberry/mv-extractor:buildcache-amd64
-          cache-to: type=registry,ref=sneakyberry/mv-extractor:buildcache-amd64,mode=max
+          tags: kekcheburec2/mv-extractor:dev-amd64
+          cache-from: type=registry,ref=kekcheburec2/mv-extractor:buildcache-amd64
+          cache-to: type=registry,ref=kekcheburec2/mv-extractor:buildcache-amd64,mode=max
 
       - name: Build and push ARM
         uses: docker/build-push-action@v3
@@ -40,10 +39,9 @@ jobs:
           context: .
           push: true
           platforms: linux/arm64
-          build-args: "ARCH=aarch64"
-          tags: sneakyberry/mv-extractor:dev-aarch64
-          cache-from: type=registry,ref=sneakyberry/mv-extractor:buildcache-aarch64
-          cache-to: type=registry,ref=sneakyberry/mv-extractor:buildcache-aarch64,mode=max
+          tags: kekcheburec2/mv-extractor:dev-aarch64
+          cache-from: type=registry,ref=kekcheburec2/mv-extractor:buildcache-aarch64
+          cache-to: type=registry,ref=kekcheburec2/mv-extractor:buildcache-aarch64,mode=max
 
   build_wheels:
     name: Build wheels for cp${{ matrix.python }}-${{ matrix.platform_id }}
@@ -58,8 +56,8 @@ jobs:
           python: 310
           bitness: 64
           platform_id: manylinux
-          manylinux_x86_64_image: sneakyberry/mv-extractor:dev-amd64
-          manylinux_aarch64_image: sneakyberry/mv-extractor:dev-aarch64
+          manylinux_x86_64_image: kekcheburec2/mv-extractor:dev-amd64
+          manylinux_aarch64_image: kekcheburec2/mv-extractor:dev-aarch64
 
     steps:
       - name: Checkout
@@ -81,9 +79,9 @@ jobs:
           CIBW_MANYLINUX_X86_64_IMAGE: ${{ matrix.manylinux_x86_64_image }}
           CIBW_MANYLINUX_AARCH64_IMAGE: ${{ matrix.manylinux_aarch64_image }}
           CIBW_BUILD_FRONTEND: build
-          CIBW_TEST_COMMAND: VIDEO_URL={project}/vid_h264.mp4 python3 {project}/tests/tests.py
+          CIBW_TEST_COMMAND: VIDEO_URL={project}/vid_h265.mp4 python3 {project}/tests/tests.py
           CIBW_BUILD_VERBOSITY: 1
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
