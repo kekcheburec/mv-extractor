@@ -29,7 +29,6 @@ jobs:
           context: .
           push: true
           platforms: linux/amd64
-          build-args: "ARCH=x86_64"
           tags: kekcheburec2/mv-extractor:dev-amd64
           cache-from: type=registry,ref=kekcheburec2/mv-extractor:buildcache-amd64
           cache-to: type=registry,ref=kekcheburec2/mv-extractor:buildcache-amd64,mode=max
@@ -40,7 +39,6 @@ jobs:
           context: .
           push: true
           platforms: linux/arm64
-          build-args: "ARCH=aarch64"
           tags: kekcheburec2/mv-extractor:dev-aarch64
           cache-from: type=registry,ref=kekcheburec2/mv-extractor:buildcache-aarch64
           cache-to: type=registry,ref=kekcheburec2/mv-extractor:buildcache-aarch64,mode=max
