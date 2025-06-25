@@ -40,58 +40,6 @@ RUN dnf install -y dnf-plugins-core epel-release && \
     libvpx-devel && \
     dnf update -y cmake
 
-# RUN apt-get update && \
-#     apt-get install -y \
-#     build-essential \
-#     cmake \
-#     git \
-#     curl \
-#     autoconf \
-#     automake \
-#     git-core \
-#     libass-dev \
-#     libfreetype6-dev \
-#     libgnutls28-dev \
-#     libmp3lame-dev \
-#     libsdl2-dev \
-#     libtool \
-#     libva-dev \
-#     libvdpau-dev \
-#     libvorbis-dev \
-#     libxcb1-dev \
-#     libxcb-shm0-dev \
-#     libxcb-xfixes0-dev \
-#     meson \
-#     ninja-build \
-#     pkg-config \
-#     texinfo \
-#     wget \
-#     nasm \
-#     yasm \
-#     zlib1g-dev \
-#     libreadline-dev \
-#     libsqlite3-dev \
-#     libncurses5-dev \
-#     libffi-dev \
-#     liblzma-dev \
-#     tk-dev \
-#     libnuma-dev \
-#     libssl-dev \
-#     libbz2-dev \
-#     gcc \
-#     g++ \
-#     make \
-#     pkg-config \
-#     libc6-dev \
-#     libpng-dev \
-#     gcc-8-base \
-#     libgcc1 \
-#     libstdc++6 \
-#     libx264-dev \
-#     libx265-dev \
-#     libopus-dev \
-#     libvpx-dev
-
 WORKDIR /root
 
 ## Install modern CMake from source
@@ -165,6 +113,17 @@ RUN git clone https://github.com/opencv/opencv.git --branch 4.5.5 --depth 1 && \
     -D BUILD_opencv_python=OFF \
     -D BUILD_opencv_python2=OFF \
     -D BUILD_opencv_python3=OFF \
+    -D WITH_ITT=OFF \
+    -D WITH_IPP=OFF \
+    -D WITH_WEBP=OFF \
+    -D WITH_JASPER=OFF \
+    -D WITH_OPENJPEG=OFF \
+    -D WITH_TIFF=OFF \
+    -D WITH_OPENEXR=OFF \
+    -D WITH_IMGCODEC_HDR=OFF \
+    -D WITH_IMGCODEC_PFM=OFF \
+    -D WITH_IMGCODEC_PXM=OFF \
+    -D WITH_IMGCODEC_SUNRASTER=OFF \
     -D WITH_FFMPEG=OFF \
     -D WITH_GTK=OFF \
     -D WITH_QT=OFF \
